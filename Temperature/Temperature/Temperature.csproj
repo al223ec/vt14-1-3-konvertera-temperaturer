@@ -63,7 +63,6 @@
     <Content Include="Content\style.css" />
     <Content Include="Default.aspx" />
     <Content Include="Error.html" />
-    <Content Include="Global.asax" />
     <Content Include="packages.config" />
     <None Include="Scripts\jquery-2.1.0.intellisense.js" />
     <Content Include="Scripts\jquery-2.1.0.js" />
@@ -78,9 +77,6 @@
     </Compile>
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Global.asax.cs">
-      <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Model\TemperatureConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

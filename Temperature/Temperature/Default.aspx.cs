@@ -12,16 +12,6 @@ namespace Temperature
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            ScriptManager.ScriptResourceMapping.AddDefinition(
-                "jquery", new ScriptResourceDefinition
-                     {
-                         Path = "/Scripts/jquery-2.1.0.min.js",
-                         DebugPath = "/Scripts/jquery-2.1.0.js",
-                         CdnPath = "http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.1.0.min.js",
-                         CdnDebugPath = "http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.1..js",
-                         CdnSupportsSecureConnection = true,
-                         LoadSuccessExpression = "jQuery"
-                     });
         }
 
         protected void SubmitButton_Click(object sender, EventArgs e)
@@ -38,9 +28,12 @@ namespace Temperature
                     {
                         throw new ApplicationException("Temperatursteg kan inte vara större än skillnaden mellan start och sluttemperaturen");
                     }
+                    if ((slutTemp - startTemp)/step > 750) //Begränsar tabellen till 750 rader
+                    {
+                        throw new ApplicationException("För många rader begärdes");
+                    }
 
-                    FormatTableheader(CelsiusRadioButton.Checked); 
-
+                    FormatTableheader(CelsiusRadioButton.Checked);
                     for (var temp = startTemp; temp < slutTemp; temp += step)
                     {
                         TableRow tRow = new TableRow();
@@ -60,7 +53,8 @@ namespace Temperature
                         tRow.Cells.Add(tCell);
                         OutputTable.Rows.Add(tRow);
                     }
-                    OutputPanel.Visible = true;
+
+                    OutputPanel.Visible = true; //allting har gått bra, visa output
                 }
                 catch (Exception ex)
                 {
@@ -68,7 +62,7 @@ namespace Temperature
                 }
             }
         }
-        private void FormatTableheader(Boolean isChecked)
+        private void FormatTableheader(bool isChecked)
         {
             TableRow tRow = new TableRow();
             tRow.CssClass = "inverse-small";

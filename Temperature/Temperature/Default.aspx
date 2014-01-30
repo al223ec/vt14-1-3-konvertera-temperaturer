@@ -46,12 +46,8 @@
                     <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" ErrorMessage="Detta fällt måste vara ifyllt" ControlToValidate="StepTextBox" Text="*"
                         CssClass="error" Display="Dynamic">
                     </asp:RequiredFieldValidator>
-                    <asp:CompareValidator ID="CompareValidator3" runat="server" ErrorMessage="Detta fällt måste vara ett tal och större än 0"
-                        ControlToValidate="StepTextBox" Operator="GreaterThan" Text="*" CssClass="error" Display="Dynamic" Type="Integer" ValueToCompare="0">
-                    </asp:CompareValidator>
-                    <asp:CompareValidator ID="CompareValidator4" runat="server" ErrorMessage="Detta fällt måste vara ett tal och mindre än 100"
-                        ControlToValidate="StepTextBox" Operator="LessThan" Text="*" CssClass="error" Display="Dynamic" Type="Integer" ValueToCompare="100">
-                    </asp:CompareValidator>
+                    <asp:RangeValidator ID="RangeValidator1" runat="server" ErrorMessage="Talet måste var mellan 1-100" MaximumValue="100" MinimumValue="1" Type="Integer"
+                        ControlToValidate="StepTextBox" Display="Dynamic" Text="*" CssClass="error"></asp:RangeValidator>
                 </div>
                 <%-- Radioknappar --%>
                 <div>
