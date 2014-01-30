@@ -17,7 +17,7 @@
                 <%-- Starttemp input --%>
                 <div>
                     <p class="label">Starttemperatur</p>
-                    <asp:TextBox ID="StartTempTextBox" runat="server" ControlToValidate="StartTempTextBox"></asp:TextBox>
+                    <asp:TextBox ID="StartTempTextBox" runat="server"></asp:TextBox>
                     <%--Validering--%>
                     <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ErrorMessage="Detta fällt måste vara ifyllt" ControlToValidate="StartTempTextBox" Text="*"
                         CssClass="error" Display="Dynamic">
