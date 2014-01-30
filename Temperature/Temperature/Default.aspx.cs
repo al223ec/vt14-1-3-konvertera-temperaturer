@@ -4,35 +4,60 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using Temperature.Model; 
+using Temperature.Model;
 
 namespace Temperature
 {
     public partial class Default : System.Web.UI.Page
     {
-        protected void Page_Load(object sender, EventArgs e) { }
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            ScriptManager.ScriptResourceMapping.AddDefinition(
+                "jquery", new ScriptResourceDefinition
+                     {
+                         Path = "/Scripts/jquery-2.1.0.min.js",
+                         DebugPath = "/Scripts/jquery-2.1.0.js",
+                         CdnPath = "http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.1.0.min.js",
+                         CdnDebugPath = "http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.1..js",
+                         CdnSupportsSecureConnection = true,
+                         LoadSuccessExpression = "jQuery"
+                     });
+        }
+
         protected void SubmitButton_Click(object sender, EventArgs e)
         {
             if (IsValid)
             {
                 try
-                { 
-                    int tal = 20;
-                    tal.CelsiusToFahrenheit();
-                    if ((int.Parse(StartTempTextBox.Text) - int.Parse(EndTempTextBox.Text)) > int.Parse(StepTextBox.Text))
+                {
+                    var startTemp = int.Parse(StartTempTextBox.Text);
+                    var slutTemp = int.Parse(EndTempTextBox.Text);
+                    var step = int.Parse(StepTextBox.Text);
+
+                    if (startTemp - slutTemp > step)
                     {
                         throw new ApplicationException("Temperatursteg kan inte vara större än skillnaden mellan start och sluttemperaturen");
                     }
 
-                    for (int i = 0; i < 8; i++)
+                    FormatTableheader(CelsiusRadioButton.Checked); 
+
+                    for (var temp = startTemp; temp < slutTemp; temp += step)
                     {
                         TableRow tRow = new TableRow();
-                        for (int j = 0; j < 2; j++)
+                        tRow.Cells.Add(new TableCell{ 
+                            Text = temp.ToString()
+                        }); 
+
+                        TableCell tCell = new TableCell();
+                        if (CelsiusRadioButton.Checked)
                         {
-                            TableCell tCell = new TableCell();
-                            tCell.Text = tal.FahrenheitToCelsius().ToString();
-                            tRow.Cells.Add(tCell);
+                            tCell.Text = temp.CelsiusToFahrenheit().ToString();
                         }
+                        else
+                        {
+                            tCell.Text = temp.FahrenheitToCelsius().ToString();
+                        }
+                        tRow.Cells.Add(tCell);
                         OutputTable.Rows.Add(tRow);
                     }
                     OutputPanel.Visible = true;
@@ -42,6 +67,34 @@ namespace Temperature
                     ModelState.AddModelError(String.Empty, ex.Message);
                 }
             }
+        }
+        private void FormatTableheader(Boolean isChecked)
+        {
+            TableRow tRow = new TableRow();
+            tRow.CssClass = "inverse-small";
+            if (CelsiusRadioButton.Checked)
+            {
+                tRow.Cells.Add(new TableCell
+                {
+                    Text = "C&deg",
+                });
+                tRow.Cells.Add(new TableCell
+                {
+                    Text = "F&deg",
+                });
+            }
+            else
+            {
+                tRow.Cells.Add(new TableCell
+                {
+                    Text = "F&deg",
+                });
+                tRow.Cells.Add(new TableCell
+                {
+                    Text = "C&deg",
+                });
+            }
+            OutputTable.Rows.Add(tRow);
         }
     }
 }

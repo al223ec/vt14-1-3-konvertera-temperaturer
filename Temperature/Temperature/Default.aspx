@@ -70,9 +70,6 @@
             <%--Output--%>
             <asp:Panel ID="OutputPanel" runat="server" CssClass="right" Visible="false">
                 <asp:Table ID="OutputTable" runat="server">
-                    <asp:TableRow>
-                        <asp:TableCell CssClass="inverse-small">C&deg</asp:TableCell><asp:TableCell CssClass="inverse-small">F&deg</asp:TableCell>
-                    </asp:TableRow>
                 </asp:Table>
             </asp:Panel>
             <%-- Footer --%>
